@@ -1,0 +1,30 @@
+/* Write your CSS here */
+.list-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 5px;
+}
+.list-para-style {
+  font-size: 15px;
+  color: #000000;
+  font-family: 'Roboto';
+}
+
+.delete-btn {
+  font-size: 13px;
+  color: #ff0b37;
+  border: 1px solid #ff0b37;
+  background-color: transparent;
+  border-radius: 3px;
+  font-family: 'Roboto';
+}
+@media screen and (min-width: 768px) {
+  .list-para-style {
+    font-size: 20px;
+  }
+  .delete-btn {
+    font-size: 15px;
+  }
+}
