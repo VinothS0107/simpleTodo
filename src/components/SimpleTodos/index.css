@@ -5,7 +5,7 @@ body {
 .bg-container {
   background-color: #ffc2a0;
   border: 1px solid #ff8542;
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -24,4 +24,27 @@ body {
 }
 .ul-list-container {
   padding: 0px 20px 0px 20px;
+}
+.form-ele {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+}
+.input-type {
+  width: 400px;
+  height: 32px;
+  padding-left: 10px;
+  font-size: 15px;
+}
+.button-add {
+  font-size: 22px;
+  height: 32px;
+  border: none;
+  color: #ffffff;
+  background-color: #ff0b37;
+  border-radius: 3px;
+  font-family: 'Roboto';
+  cursor: pointer;
 }

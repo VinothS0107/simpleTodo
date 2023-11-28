@@ -1,18 +1,79 @@
-// Write your code here
 import './index.css'
 
 const TodoItem = props => {
-  const {eachItem, deleteList} = props
-  const {title, id} = eachItem
+  const {
+    eachItem,
+    deleteList,
+    onEditBtn,
+    isEdit,
+    onSaveEdited,
+    editTitle,
+    onChangeBtn,
+    onCheckList,
+  } = props
+
+  const {title, id, checked} = eachItem
+
   const onDeleteList = () => {
     deleteList(id)
   }
+
+  const onEditClick = () => {
+    onEditBtn(id)
+  }
+  const onSaveEditedClick = () => {
+    onSaveEdited()
+  }
+
+  const onChangeBtnClick = event => {
+    const target = event.target.value
+    onChangeBtn(target)
+  }
+
+  const onCheck = () => {
+    onCheckList(id)
+  }
+
   return (
     <li className="list-container">
-      <p className="list-para-style">{title}</p>
-      <button className="delete-btn" type="button" onClick={onDeleteList}>
-        Delete
-      </button>
+      {isEdit === true ? (
+        <input
+          type="text"
+          placeholder="Enter the Text"
+          className="input-type"
+          onChange={onChangeBtnClick}
+          value={editTitle}
+        />
+      ) : (
+        <>
+          <input type="checkbox" onClick={onCheck} />
+          <p
+            className={
+              checked === true ? 'list-para-style-marked' : 'list-para-style'
+            }
+          >
+            {title}
+          </p>
+        </>
+      )}
+      <div className="button-container">
+        {isEdit === true ? (
+          <button
+            type="button"
+            className="button-class"
+            onClick={onSaveEditedClick}
+          >
+            Save
+          </button>
+        ) : (
+          <button type="button" className="button-class" onClick={onEditClick}>
+            Edit
+          </button>
+        )}
+        <button className="delete-btn" type="button" onClick={onDeleteList}>
+          Delete
+        </button>
+      </div>
     </li>
   )
 }

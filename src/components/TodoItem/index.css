@@ -19,12 +19,49 @@
   background-color: transparent;
   border-radius: 3px;
   font-family: 'Roboto';
+  cursor: pointer;
+}
+.delete-btn:hover {
+  background-color: #ff0b37;
+  color: #ffffff;
+}
+.button-class {
+  font-size: 13px;
+  color: #ff0b37;
+  border: 1px solid #ff0b37;
+  background-color: transparent;
+  border-radius: 3px;
+  font-family: 'Roboto';
+  cursor: pointer;
+}
+.button-class:hover {
+  background-color: #ff0b37;
+  color: #ffffff;
+}
+.list-para-style-marked {
+  font-size: 15px;
+  color: #000000;
+  font-family: 'Roboto';
+  text-decoration: line-through;
 }
 @media screen and (min-width: 768px) {
   .list-para-style {
     font-size: 20px;
   }
+  .list-para-style-marked {
+    font-size: 20px;
+    color: #000000;
+    font-family: 'Roboto';
+    text-decoration: line-through;
+  }
+
   .delete-btn {
     font-size: 15px;
   }
+}
+.button-container {
+  width: 100px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
