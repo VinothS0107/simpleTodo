@@ -44,6 +44,14 @@
   font-family: 'Roboto';
   text-decoration: line-through;
 }
+.task_container {
+  display: flex;
+  flex-direction: row;
+}
+.input-type-Separate {
+  width: 200px;
+  height: 30px;
+}
 @media screen and (min-width: 768px) {
   .list-para-style {
     font-size: 20px;

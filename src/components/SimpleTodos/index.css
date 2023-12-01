@@ -1,7 +1,5 @@
 /* Write your CSS here */
-body {
-  margin: 0;
-}
+
 .bg-container {
   background-color: #ffc2a0;
   border: 1px solid #ff8542;
@@ -31,7 +29,9 @@ body {
   justify-content: space-between;
   align-items: center;
   padding: 20px;
+  flex-wrap: wrap;
 }
+
 .input-type {
   width: 400px;
   height: 32px;
@@ -47,4 +47,10 @@ body {
   border-radius: 3px;
   font-family: 'Roboto';
   cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .button-add {
+    margin-top: 10px;
+  }
 }

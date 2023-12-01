@@ -64,14 +64,32 @@ class SimpleTodos extends Component {
   onSubmitLimit = event => {
     event.preventDefault()
     const {todoDetailsList, taskTitle, checked} = this.state
+    const convertedArray = taskTitle.split(' ')
+    const checkLength = convertedArray.length
+    const checkLastItem = convertedArray.pop()
+    const numberOfItems = parseInt(checkLastItem, 10)
 
-    this.setState({
-      todoDetailsList: [
-        ...todoDetailsList,
-        {id: uuid(), title: taskTitle, checked},
-      ],
-      taskTitle: '',
-    })
+    if (Number.isNaN(numberOfItems)) {
+      this.setState(prev => ({
+        todoDetailsList: [
+          ...prev.todoDetailsList,
+          {id: uuid(), title: taskTitle, checked},
+        ],
+        taskTitle: '',
+      }))
+    } else {
+      const title = convertedArray.join(' ')
+      const newTodos = Array.from({length: numberOfItems}, () => ({
+        id: uuid(),
+        title,
+        checked: false,
+      }))
+
+      this.setState(prev => ({
+        todoDetailsList: [...prev.todoDetailsList, ...newTodos],
+        taskTitle: '',
+      }))
+    }
   }
 
   onEditBtn = valueId => {

@@ -40,12 +40,12 @@ const TodoItem = props => {
         <input
           type="text"
           placeholder="Enter the Text"
-          className="input-type"
+          className="input-type-Separate"
           onChange={onChangeBtnClick}
           value={editTitle}
         />
       ) : (
-        <>
+        <div className="task_container">
           <input type="checkbox" onClick={onCheck} />
           <p
             className={
@@ -54,7 +54,7 @@ const TodoItem = props => {
           >
             {title}
           </p>
-        </>
+        </div>
       )}
       <div className="button-container">
         {isEdit === true ? (
