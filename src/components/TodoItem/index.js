@@ -18,20 +18,20 @@ const TodoItem = props => {
     deleteList(id)
   }
 
-  const onEditClick = () => {
-    onEditBtn(id)
+  const onEditClick = valueId => {
+    onEditBtn(valueId)
   }
-  const onSaveEditedClick = () => {
-    onSaveEdited()
+  const onSaveEditedClick = valueId => {
+    onSaveEdited(valueId)
   }
 
   const onChangeBtnClick = event => {
-    const target = event.target.value
-    onChangeBtn(target)
+    // const target = event.target.value
+    onChangeBtn(event)
   }
 
-  const onCheck = () => {
-    onCheckList(id)
+  const onCheck = value => {
+    onCheckList(value)
   }
 
   return (
@@ -42,11 +42,15 @@ const TodoItem = props => {
           placeholder="Enter the Text"
           className="input-type-Separate"
           onChange={onChangeBtnClick}
-          value={editTitle}
+          value={editTitle.title}
         />
       ) : (
         <div className="task_container">
-          <input type="checkbox" onClick={onCheck} />
+          <input
+            type="checkbox"
+            onClick={() => onCheck(id)}
+            defaultChecked={checked}
+          />
           <p
             className={
               checked === true ? 'list-para-style-marked' : 'list-para-style'
@@ -57,19 +61,17 @@ const TodoItem = props => {
         </div>
       )}
       <div className="button-container">
-        {isEdit === true ? (
-          <button
-            type="button"
-            className="button-class"
-            onClick={onSaveEditedClick}
-          >
-            Save
-          </button>
-        ) : (
-          <button type="button" className="button-class" onClick={onEditClick}>
-            Edit
-          </button>
-        )}
+        <button
+          type="button"
+          className="button-class"
+          onClick={
+            isEdit === true
+              ? () => onSaveEditedClick(id)
+              : () => onEditClick(id)
+          }
+        >
+          {isEdit === true ? 'Save' : 'Edit'}
+        </button>
         <button className="delete-btn" type="button" onClick={onDeleteList}>
           Delete
         </button>

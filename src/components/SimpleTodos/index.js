@@ -9,34 +9,42 @@ const initialTodosList = [
   {
     id: uuid(),
     title: 'Book the ticket for today evening',
+    checked: false,
   },
   {
     id: uuid(),
     title: 'Rent the movie for tomorrow movie night',
+    checked: false,
   },
   {
     id: uuid(),
     title: 'Confirm the slot for the yoga session tomorrow morning',
+    checked: false,
   },
   {
     id: uuid(),
     title: 'Drop the parcel at Bloomingdale',
+    checked: false,
   },
   {
     id: uuid(),
     title: 'Order fruits on Big Basket',
+    checked: false,
   },
   {
     id: uuid(),
     title: 'Fix the production issue',
+    checked: false,
   },
   {
     id: uuid(),
     title: 'Confirm my slot for Saturday Night',
+    checked: false,
   },
   {
     id: uuid(),
     title: 'Get essentials for Sunday car wash',
+    checked: false,
   },
 ]
 
@@ -45,14 +53,13 @@ class SimpleTodos extends Component {
   state = {
     todoDetailsList: initialTodosList,
     taskTitle: '',
-    id: '',
-    editTitle: '',
-    checked: false,
+    edit: '',
   }
 
   ondeleteIcon = id => {
     const {todoDetailsList} = this.state
     const filteredList = todoDetailsList.filter(each => each.id !== id)
+
     this.setState({todoDetailsList: filteredList})
   }
 
@@ -63,9 +70,8 @@ class SimpleTodos extends Component {
 
   onSubmitLimit = event => {
     event.preventDefault()
-    const {todoDetailsList, taskTitle, checked} = this.state
+    const {taskTitle} = this.state
     const convertedArray = taskTitle.split(' ')
-    const checkLength = convertedArray.length
     const checkLastItem = convertedArray.pop()
     const numberOfItems = parseInt(checkLastItem, 10)
 
@@ -73,7 +79,7 @@ class SimpleTodos extends Component {
       this.setState(prev => ({
         todoDetailsList: [
           ...prev.todoDetailsList,
-          {id: uuid(), title: taskTitle, checked},
+          {id: uuid(), title: taskTitle, checked: false},
         ],
         taskTitle: '',
       }))
@@ -95,39 +101,39 @@ class SimpleTodos extends Component {
   onEditBtn = valueId => {
     const {todoDetailsList} = this.state
     const filtered = todoDetailsList.find(each => each.id === valueId)
-    const {title, id} = filtered
+
     this.setState({
-      editTitle: title,
-      id,
+      edit: filtered,
     })
   }
 
-  onSaveEdited = () => {
-    const {todoDetailsList, editTitle, id} = this.state
+  onSaveEdited = id => {
+    const {todoDetailsList, edit} = this.state
     const listedDetails = todoDetailsList.map(each =>
-      each.id === id ? {...each, title: editTitle} : each,
+      each.id === id ? {...each, ...edit, id: uuid()} : each,
     )
-    this.setState({todoDetailsList: listedDetails, id: ''})
+
+    this.setState({todoDetailsList: listedDetails})
   }
 
-  onInputEdit = value => {
-    this.setState({
-      editTitle: value,
-    })
+  onEditInput = event => {
+    const {edit} = this.state
+    const editedInput = event.target.value
+    const final = {...edit, title: editedInput}
+    this.setState({edit: final})
   }
 
-  onCheckMark = val => {
+  onCheckMark = id => {
     const {todoDetailsList} = this.state
     this.setState({
       todoDetailsList: todoDetailsList.map(each =>
-        each.id === val ? {...each, checked: !each.checked} : each,
+        each.id === id ? {...each, checked: !each.checked} : each,
       ),
     })
   }
 
   render() {
-    const {todoDetailsList, taskTitle, id, editTitle, onCheck} = this.state
-
+    const {todoDetailsList, taskTitle, edit} = this.state
     return (
       <div className="bg-container">
         <div className="card-container">
@@ -153,13 +159,13 @@ class SimpleTodos extends Component {
             {todoDetailsList.map(eachItem => (
               <TodoItem
                 eachItem={eachItem}
-                isEdit={eachItem.id === id}
+                isEdit={eachItem.id === edit.id}
                 key={eachItem.id}
                 deleteList={this.ondeleteIcon}
                 onEditBtn={this.onEditBtn}
                 onSaveEdited={this.onSaveEdited}
-                editTitle={editTitle}
-                onChangeBtn={this.onInputEdit}
+                editTitle={edit}
+                onChangeBtn={this.onEditInput}
                 onCheckList={this.onCheckMark}
               />
             ))}
