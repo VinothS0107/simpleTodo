@@ -5,15 +5,12 @@ const TodoItem = props => {
     eachItem,
     deleteList,
     onEditBtn,
-    isEdit,
     onSaveEdited,
-    editTitle,
     onChangeBtn,
     onCheckList,
   } = props
 
-  const {title, id, checked} = eachItem
-
+  const {title, id, checked, isEdit} = eachItem
   const onDeleteList = () => {
     deleteList(id)
   }
@@ -27,7 +24,7 @@ const TodoItem = props => {
 
   const onChangeBtnClick = event => {
     // const target = event.target.value
-    onChangeBtn(event)
+    onChangeBtn(event, id)
   }
 
   const onCheck = value => {
@@ -42,7 +39,7 @@ const TodoItem = props => {
           placeholder="Enter the Text"
           className="input-type-Separate"
           onChange={onChangeBtnClick}
-          value={editTitle.title}
+          value={title}
         />
       ) : (
         <div className="task_container">
@@ -64,13 +61,9 @@ const TodoItem = props => {
         <button
           type="button"
           className="button-class"
-          onClick={
-            isEdit === true
-              ? () => onSaveEditedClick(id)
-              : () => onEditClick(id)
-          }
+          onClick={isEdit ? () => onSaveEditedClick(id) : () => onEditClick(id)}
         >
-          {isEdit === true ? 'Save' : 'Edit'}
+          {isEdit ? 'Save' : 'Edit'}
         </button>
         <button className="delete-btn" type="button" onClick={onDeleteList}>
           Delete

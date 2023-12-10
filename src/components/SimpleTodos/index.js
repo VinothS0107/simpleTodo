@@ -10,41 +10,49 @@ const initialTodosList = [
     id: uuid(),
     title: 'Book the ticket for today evening',
     checked: false,
+    isEdit: false,
   },
   {
     id: uuid(),
     title: 'Rent the movie for tomorrow movie night',
     checked: false,
+    isEdit: false,
   },
   {
     id: uuid(),
     title: 'Confirm the slot for the yoga session tomorrow morning',
     checked: false,
+    isEdit: false,
   },
   {
     id: uuid(),
     title: 'Drop the parcel at Bloomingdale',
     checked: false,
+    isEdit: false,
   },
   {
     id: uuid(),
     title: 'Order fruits on Big Basket',
     checked: false,
+    isEdit: false,
   },
   {
     id: uuid(),
     title: 'Fix the production issue',
     checked: false,
+    isEdit: false,
   },
   {
     id: uuid(),
     title: 'Confirm my slot for Saturday Night',
     checked: false,
+    isEdit: false,
   },
   {
     id: uuid(),
     title: 'Get essentials for Sunday car wash',
     checked: false,
+    isEdit: false,
   },
 ]
 
@@ -79,7 +87,7 @@ class SimpleTodos extends Component {
       this.setState(prev => ({
         todoDetailsList: [
           ...prev.todoDetailsList,
-          {id: uuid(), title: taskTitle, checked: false},
+          {id: uuid(), title: taskTitle, checked: false, isEdit: false},
         ],
         taskTitle: '',
       }))
@@ -89,6 +97,7 @@ class SimpleTodos extends Component {
         id: uuid(),
         title,
         checked: false,
+        isEdit: false,
       }))
 
       this.setState(prev => ({
@@ -100,27 +109,40 @@ class SimpleTodos extends Component {
 
   onEditBtn = valueId => {
     const {todoDetailsList} = this.state
-    const filtered = todoDetailsList.find(each => each.id === valueId)
-
-    this.setState({
-      edit: filtered,
+    const filtered = todoDetailsList.map(each => {
+      if (each.id === valueId) {
+        return {...each, isEdit: true}
+      }
+      return each
     })
+
+    this.setState({todoDetailsList: filtered})
   }
 
   onSaveEdited = id => {
-    const {todoDetailsList, edit} = this.state
-    const listedDetails = todoDetailsList.map(each =>
-      each.id === id ? {...each, ...edit, id: uuid()} : each,
-    )
+    console.log(id)
+    const {todoDetailsList} = this.state
+    const saveDetails = todoDetailsList.map(each => {
+      if (each.id === id) {
+        return {...each, isEdit: false}
+      }
+      return each
+    })
 
-    this.setState({todoDetailsList: listedDetails})
+    this.setState({todoDetailsList: saveDetails})
   }
 
-  onEditInput = event => {
-    const {edit} = this.state
+  onEditInput = (event, id) => {
+    const {todoDetailsList} = this.state
     const editedInput = event.target.value
-    const final = {...edit, title: editedInput}
-    this.setState({edit: final})
+
+    const filtered = todoDetailsList.map(each => {
+      if (each.id === id) {
+        return {...each, title: editedInput}
+      }
+      return each
+    })
+    this.setState({todoDetailsList: filtered})
   }
 
   onCheckMark = id => {
@@ -159,7 +181,6 @@ class SimpleTodos extends Component {
             {todoDetailsList.map(eachItem => (
               <TodoItem
                 eachItem={eachItem}
-                isEdit={eachItem.id === edit.id}
                 key={eachItem.id}
                 deleteList={this.ondeleteIcon}
                 onEditBtn={this.onEditBtn}
